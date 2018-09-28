@@ -1,5 +1,5 @@
 simple_watchdog_timer
-=========
+=====================
 
 Requirements
 -------------
