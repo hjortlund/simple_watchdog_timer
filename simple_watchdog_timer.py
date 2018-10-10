@@ -8,10 +8,11 @@ logger = logging.getLogger()
 
 
 class WDT:
-    def __init__(self, callback, check_interval_sec: float = 0.01, trigger_delta_sec: float = 1):
+    def __init__(self, callback, check_interval_sec: float = 0.01, trigger_delta_sec: float = 1, identifier=None):
         self.check_interval_sec = check_interval_sec
         self.trigger_delta = trigger_delta_sec * 1000000
         self.callback = callback
+        self.identifier = identifier
 
         self.pause_flag = False
         self.resume_event = Event()
@@ -45,7 +46,10 @@ class WDT:
                 logger.debug('WDT: The {} thread has now resumed'.format(self.checker_thread_name))
 
             elif (self.now() - self.internal_ts) > self.trigger_delta:
-                self.callback(self)
+                if self.identifier is None:
+                    self.callback(self)
+                else:
+                    self.callback(self, self.identifier)
 
             logger.debug('WDT: Sleeping for {} sec.'.format(self.check_interval_sec))
             sleep(self.check_interval_sec)
@@ -86,3 +90,6 @@ class WDT:
         logger.debug('WDT: Poison pill was injected, to stop the {} thread'.format(self.checker_thread_name))
         self.thread_stopped.wait()
         logger.info('WDT: Stopped')
+
+    def get_internal_time(self):
+        return self.internal_ts

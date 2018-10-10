@@ -8,8 +8,8 @@ def readme():
 
 setup(
     name='simple_watchdog_timer',
-    version='0.1.0',
-    packages=['simple_watchdog_timer'],
+    version='0.1.1',
+    packages=[''],
     url='https://github.com/hjortlund/simple_watchdog_timer',
     license='MIT',
     author='Christoffer Hjortlund',

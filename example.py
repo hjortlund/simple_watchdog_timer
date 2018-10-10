@@ -1,4 +1,4 @@
-from simple_watchdog_timer.simple_watchdog_timer import WDT
+import simple_watchdog_timer as swt
 from random import uniform
 from time import sleep
 
@@ -28,7 +28,7 @@ def cb(dog):
 
 
 def main():
-    wdt = WDT(check_interval_sec=0.01, trigger_delta_sec=0.50, callback=cb)
+    wdt = swt.WDT(check_interval_sec=0.01, trigger_delta_sec=0.50, callback=cb)
 
     while True:
         zzz_sec = uniform(0, 0.60)
